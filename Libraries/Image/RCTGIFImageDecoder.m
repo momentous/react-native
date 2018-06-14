@@ -84,11 +84,12 @@ RCT_EXPORT_MODULE()
     // Create animation
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
     animation.calculationMode = kCAAnimationDiscrete;
-    animation.repeatCount = loopCount == 0 ? HUGE_VALF : loopCount;
+    animation.repeatCount = loopCount == 0 ? 0 : loopCount; // <-- fix for single play gif from joshbedo
     animation.keyTimes = keyTimes;
     animation.values = images;
     animation.duration = duration;
     animation.removedOnCompletion = NO;
+    animation.fillMode = @"forwards"; // <-- insert this line to prevent the image disappearing after animation
     image.reactKeyframeAnimation = animation;
 
   } else {
